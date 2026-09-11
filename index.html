@@ -5,15 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Semester Progress</title>
   <style>
-    body { 
-      background: #121212; 
+    /* 1. Apply background-color to both html and body */
+    html, body { 
+      background-color: #121212 !important; 
       color: white; 
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
       display: flex; 
       flex-direction: column; 
       align-items: center; 
       justify-content: center; 
-      height: 100vh; 
+      min-height: 100vh; /* Changed from height to min-height */
       margin: 0; 
       box-sizing: border-box;
     }
@@ -23,6 +24,14 @@
       letter-spacing: 1px;
       color: #eaeaea;
     }
+    
+    /* Dedicated capture wrapper ensuring a solid dark fill */
+    #capture-wrapper {
+      background-color: #121212;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
     /* Container holding all rows */
     .timeline {
       display: flex;
@@ -78,9 +87,10 @@
 </head>
 <body>
 
-  
-  <!-- This container will hold our 14 rows -->
-  <div class="timeline" id="semesterTimeline"></div>
+  <!-- Wrapper guarantees dark background during element exports -->
+  <div id="capture-wrapper">
+    <div class="timeline" id="semesterTimeline"></div>
+  </div>
 
   <script>
     // -------------------------------------------------------------
@@ -138,4 +148,3 @@
   </script>
 </body>
 </html>
-
