@@ -5,31 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Semester Progress</title>
   <style>
-    /* 1. Apply background-color to both html and body */
-    html, body { 
-      background-color: #121212 !important; 
-      color: white; 
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      justify-content: center; 
-      min-height: 100vh; /* Changed from height to min-height */
-      margin: 0; 
+    /* 1. Base dark background for normal web viewing */
+    html, body {
+      background-color: #121212 !important;
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100vh;
       box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
     }
-    h2 { 
-      margin-bottom: 25px; 
-      font-weight: 500; 
-      letter-spacing: 1px;
-      color: #eaeaea;
-    }
-    
-    /* Dedicated capture wrapper ensuring a solid dark fill */
+
     #capture-wrapper {
-      background-color: #121212;
+      background-color: #121212 !important;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       padding: 20px;
-      border-radius: 12px;
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
     }
 
     /* Container holding all rows */
@@ -38,26 +41,30 @@
       flex-direction: column;
       gap: 8px;
     }
+
     /* Single row layout: Week Label on left, 7 Days on right */
     .week-row {
       display: flex;
       align-items: center;
       gap: 12px;
     }
+
     /* Style for Week Labels (W1, W2, etc.) */
     .week-label {
       font-size: 12px;
       color: #888;
       font-weight: bold;
-      width: 28px; /* Fixed width keeps columns lined up */
+      width: 28px;
       text-align: right;
     }
+
     /* Grid layout for the 7 days inside a week */
     .days-grid { 
       display: grid; 
       grid-template-columns: repeat(7, 1fr); 
       gap: 6px; 
     }
+
     .day { 
       width: 32px; 
       height: 32px; 
@@ -69,34 +76,51 @@
       font-size: 10px; 
       color: #555; 
       font-weight: bold;
+      background-color: #121212;
+      box-sizing: border-box;
     }
+
     /* Days you have finished */
     .past { 
-      background-color: #2ed573; 
-      border-color: #2ed573; 
-      color: #121212; 
+      background-color: #2ed573 !important; 
+      border-color: #2ed573 !important; 
+      color: #121212 !important; 
     }
+
     /* Today */
     .current { 
-      background-color: #ffa502; 
-      border-color: #ffa502; 
-      color: black; 
+      background-color: #ffa502 !important; 
+      border-color: #ffa502 !important; 
+      color: black !important; 
       box-shadow: 0 0 12px #ffa502;
+    }
+
+    /* 2. Overrides iOS Shortcuts "Make PDF" ink-saving behavior */
+    @media print {
+      @page {
+        background-color: #121212;
+        margin: 0;
+      }
+      html, body, #capture-wrapper {
+        background-color: #121212 !important;
+        color: white !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .day {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Wrapper guarantees dark background during element exports -->
   <div id="capture-wrapper">
     <div class="timeline" id="semesterTimeline"></div>
   </div>
 
   <script>
-    // -------------------------------------------------------------
-    // SETUP YOUR START DATE HERE:
-    // Put your start date inside Date("YYYY-MM-DD")
-    // -------------------------------------------------------------
     const startDate = new Date("2026-09-07"); 
     const totalWeeks = 14;
 
@@ -110,19 +134,15 @@
     const timelineContainer = document.getElementById('semesterTimeline');
     let dayCounter = 0;
 
-    // Loop 14 times to create 14 rows
     for (let w = 1; w <= totalWeeks; w++) {
-      // 1. Create a row container
       const row = document.createElement('div');
       row.classList.add('week-row');
 
-      // 2. Create the Week Label (W1, W2, etc.)
       const label = document.createElement('div');
       label.classList.add('week-label');
       label.innerText = 'W' + w;
       row.appendChild(label);
 
-      // 3. Create the 7-day grid block for this week
       const daysGrid = document.createElement('div');
       daysGrid.classList.add('days-grid');
 
@@ -131,7 +151,6 @@
         dayBox.classList.add('day');
         dayBox.innerText = dayCounter + 1;
 
-        // Check if day is past, present, or future
         if (dayCounter < daysPassed) {
           dayBox.classList.add('past'); 
         } else if (dayCounter === daysPassed) {
@@ -139,7 +158,7 @@
         }
         
         daysGrid.appendChild(dayBox);
-        dayCounter++; // Move to next total day number
+        dayCounter++;
       }
 
       row.appendChild(daysGrid);
