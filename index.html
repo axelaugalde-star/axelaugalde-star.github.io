@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Semester Progress</title>
   <style>
-    /* 1. Base page styles referencing your uploaded image file */
+    /* 1. Page layout & background configuration */
     html, body {
       background: url('IMG_4290.jpeg') no-repeat center center fixed !important;
       background-size: cover !important;
@@ -14,87 +14,97 @@
       margin: 0;
       padding: 0;
       width: 100%;
-      height: 100%;
+      min-height: 100vh;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-end;
+      /* Safely centers without pushing top off-screen */
+      justify-content: center;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
 
     #capture-wrapper {
       width: 100%;
-      height: 100%;
       display: flex;
       justify-content: center;
-      align-items: flex-end;
-      padding: 20px 20px 120px 20px;
+      align-items: center;
+      /* Padding keeps content clear of lockscreen elements */
+      padding: 40px 16px 100px 16px;
       box-sizing: border-box;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
 
+    /* 2. Transparent background lets the photo show through */
     .timeline {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      background: rgba(10, 25, 47, 0.75);
-      padding: 16px;
-      border-radius: 12px;
-      backdrop-filter: blur(8px);
+      gap: 5px;
+      background: rgba(0, 0, 0, 0.35); /* Subtle dark overlay for contrast */
+      padding: 12px;
+      border-radius: 14px;
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
     .week-row {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
     }
 
     .week-label {
-      font-size: 12px;
-      color: #cbd5e1;
+      font-size: 11px;
+      color: #ffffff;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
       font-weight: bold;
-      width: 28px;
+      width: 24px;
       text-align: right;
     }
 
     .days-grid { 
       display: grid; 
       grid-template-columns: repeat(7, 1fr); 
-      gap: 6px; 
+      gap: 4px; 
     }
 
+    /* Slightly smaller day boxes to fit 14 weeks cleanly on iPhone screens */
     .day { 
-      width: 32px; 
-      height: 32px; 
-      border-radius: 6px; 
-      border: 2px solid rgba(255, 255, 255, 0.2); 
+      width: 26px; 
+      height: 26px; 
+      border-radius: 5px; 
+      border: 1px solid rgba(255, 255, 255, 0.25); 
       display: flex; 
       align-items: center; 
       justify-content: center; 
-      font-size: 10px; 
-      color: #e2e8f0; 
+      font-size: 9px; 
+      color: #ffffff; 
       font-weight: bold;
-      background-color: rgba(15, 23, 42, 0.6);
+      background-color: rgba(0, 0, 0, 0.4);
       box-sizing: border-box;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
     }
 
+    /* Days finished */
     .past { 
       background-color: #2ed573 !important; 
       border-color: #2ed573 !important; 
-      color: #0a192f !important; 
+      color: #000000 !important; 
+      text-shadow: none;
     }
 
+    /* Today */
     .current { 
       background-color: #ffa502 !important; 
       border-color: #ffa502 !important; 
       color: black !important; 
-      box-shadow: 0 0 12px #ffa502;
+      box-shadow: 0 0 10px #ffa502;
+      text-shadow: none;
     }
 
-    /* 2. Preserves IMG_4290.jpeg for iOS Shortcut PDF renders */
+    /* Print & Screenshot overrides */
     @media print {
       @page {
         margin: 0;
@@ -105,8 +115,8 @@
         background-size: cover !important;
         height: 100vh !important;
         width: 100vw !important;
-        justify-content: flex-end !important;
-        align-items: flex-end !important;
+        justify-content: center !important;
+        align-items: center !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
