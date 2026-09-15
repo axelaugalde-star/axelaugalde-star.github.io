@@ -34,7 +34,6 @@
       print-color-adjust: exact !important;
     }
 
-    /* Highly transparent glass layer (0.15 opacity) to maximize image visibility */
     .timeline {
       display: flex;
       flex-direction: column;
@@ -67,7 +66,6 @@
       gap: 4px; 
     }
 
-    /* Transparent day boxes with text drop-shadows */
     .day { 
       width: 26px; 
       height: 26px; 
@@ -84,21 +82,21 @@
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
     }
 
-    /* Days finished */
+    /* Finished Days -> Puce (#CC8899) */
     .past { 
-      background-color: rgba(46, 213, 115, 0.85) !important; 
-      border-color: #2ed573 !important; 
-      color: #000000 !important; 
-      text-shadow: none;
+      background-color: #CC8899 !important; 
+      border-color: #CC8899 !important; 
+      color: #ffffff !important; 
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     }
 
-    /* Today */
+    /* Today -> Wild Orchid (#D470A2) */
     .current { 
-      background-color: #ffa502 !important; 
-      border-color: #ffa502 !important; 
-      color: black !important; 
-      box-shadow: 0 0 10px #ffa502;
-      text-shadow: none;
+      background-color: #D470A2 !important; 
+      border-color: #D470A2 !important; 
+      color: #ffffff !important; 
+      box-shadow: 0 0 10px #D470A2;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     }
 
     @media print {
