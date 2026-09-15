@@ -2,47 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=393, height=852, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Semester Progress</title>
   <style>
-    /* 1. Global Reset & iPhone 14 Pro Viewport Locking */
+    /* Wipe all margins, paddings, and borders on every element */
     *, *::before, *::after {
       box-sizing: border-box;
-      margin: 0;
+      margin: 0 !important;
       padding: 0;
     }
 
     html, body {
-      width: 393px !important;
-      height: 852px !important;
-      min-width: 393px !important;
-      min-height: 852px !important;
-      max-width: 393px !important;
-      max-height: 852px !important;
-      overflow: hidden;
-      background: url('IMG_4290.jpeg') no-repeat center center !important;
-      background-size: cover !important;
-      color: white;
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 100vh !important;
+      min-width: 100vw !important;
+      overflow: hidden !important;
+      background-color: #000000;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
 
+    /* Absolute position background image to fill PDF canvas completely */
+    .bg-image {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: 1;
+    }
+
     #capture-wrapper {
-      width: 393px;
-      height: 852px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 2;
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      /* Precisely places grid above the camera & flashlight icons */
       padding-bottom: 75px;
       box-sizing: border-box;
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
     }
 
     .timeline {
@@ -109,34 +113,28 @@
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     }
 
-    /* Print & WebKit Screen Capture Overrides */
+    /* PDF Print Engine overrides */
     @media print {
       @page {
         margin: 0 !important;
-        size: 393px 852px;
+        size: auto;
       }
       html, body {
-        margin: 0 !important;
-        padding: 0 !important;
-        background: url('IMG_4290.jpeg') no-repeat center center !important;
-        background-size: cover !important;
-        height: 852px !important;
-        width: 393px !important;
-        overflow: hidden !important;
-        justify-content: flex-end !important;
-        align-items: center !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        background-color: #000000 !important;
       }
-      #capture-wrapper {
-        height: 852px !important;
-        width: 393px !important;
-        padding-bottom: 75px !important;
+      .bg-image {
+        width: 100vw !important;
+        height: 100vh !important;
       }
     }
   </style>
 </head>
 <body>
+
+  <!-- Image element ensures wallpaper stretches across PDF render engine -->
+  <img src="IMG_4290.jpeg" class="bg-image" alt="Wallpaper">
 
   <div id="capture-wrapper">
     <div class="timeline" id="semesterTimeline"></div>
