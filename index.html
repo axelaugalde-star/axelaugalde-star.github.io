@@ -2,45 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=393, height=852, initial-scale=1.0">
   <title>Semester Progress</title>
   <style>
-    /* Wipe all margins, paddings, and borders on every element */
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0 !important;
       padding: 0;
     }
 
+    /* Force the canvas size to match iPhone 14 Pro ratio */
     html, body {
-      width: 100% !important;
-      height: 100% !important;
-      min-height: 100vh !important;
-      min-width: 100vw !important;
+      width: 393px !important;
+      height: 852px !important;
+      max-width: 393px !important;
+      max-height: 852px !important;
       overflow: hidden !important;
       background-color: #000000;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
+      position: relative;
     }
 
-    /* Absolute position background image to fill PDF canvas completely */
+    /* Contain image so it doesn't over-crop/zoom */
     .bg-image {
-      position: fixed;
+      position: absolute;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
+      width: 393px;
+      height: 852px;
+      object-fit: contain; /* Prevents zooming in on the face */
+      object-position: center bottom;
       z-index: 1;
     }
 
     #capture-wrapper {
-      position: fixed;
+      position: absolute;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 393px;
+      height: 852px;
       z-index: 2;
       display: flex;
       justify-content: center;
@@ -53,10 +55,11 @@
       display: flex;
       flex-direction: column;
       gap: 3px;
-      background: rgba(0, 0, 0, 0.15); 
+      background: rgba(0, 0, 0, 0.25); 
       padding: 10px;
       border-radius: 14px;
-      backdrop-filter: blur(4px);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       border: 1px solid rgba(255, 255, 255, 0.25);
     }
 
@@ -96,7 +99,7 @@
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
     }
 
-    /* Finished Days -> Puce */
+    /* Past days */
     .past { 
       background-color: #CC8899 !important; 
       border-color: #CC8899 !important; 
@@ -104,7 +107,7 @@
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     }
 
-    /* Today -> Wild Orchid */
+    /* Current day */
     .current { 
       background-color: #D470A2 !important; 
       border-color: #D470A2 !important; 
@@ -113,27 +116,21 @@
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     }
 
-    /* PDF Print Engine overrides */
+    /* Lock PDF dimensions */
     @media print {
       @page {
+        size: 393px 852px !important;
         margin: 0 !important;
-        size: auto;
       }
       html, body {
-        width: 100vw !important;
-        height: 100vh !important;
-        background-color: #000000 !important;
-      }
-      .bg-image {
-        width: 100vw !important;
-        height: 100vh !important;
+        width: 393px !important;
+        height: 852px !important;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Image element ensures wallpaper stretches across PDF render engine -->
   <img src="IMG_4290.jpeg" class="bg-image" alt="Wallpaper">
 
   <div id="capture-wrapper">
