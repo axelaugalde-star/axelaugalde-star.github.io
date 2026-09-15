@@ -2,19 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=393, height=852, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Semester Progress</title>
   <style>
+    /* 1. Global Reset & iPhone 14 Pro Viewport Locking */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     html, body {
-      background: url('IMG_4290.jpeg') no-repeat center center fixed !important;
+      width: 393px !important;
+      height: 852px !important;
+      min-width: 393px !important;
+      min-height: 852px !important;
+      max-width: 393px !important;
+      max-height: 852px !important;
+      overflow: hidden;
+      background: url('IMG_4290.jpeg') no-repeat center center !important;
       background-size: cover !important;
       color: white;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      min-height: 100vh;
-      box-sizing: border-box;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -24,11 +33,13 @@
     }
 
     #capture-wrapper {
-      width: 100%;
+      width: 393px;
+      height: 852px;
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      padding: 180px 16px 60px 16px;
+      /* Precisely places grid above the camera & flashlight icons */
+      padding-bottom: 75px;
       box-sizing: border-box;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
@@ -37,9 +48,9 @@
     .timeline {
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 3px;
       background: rgba(0, 0, 0, 0.15); 
-      padding: 14px;
+      padding: 10px;
       border-radius: 14px;
       backdrop-filter: blur(4px);
       border: 1px solid rgba(255, 255, 255, 0.25);
@@ -48,14 +59,14 @@
     .week-row {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .week-label {
-      font-size: 11px;
+      font-size: 10px;
       color: #ffffff;
       font-weight: bold;
-      width: 24px;
+      width: 22px;
       text-align: right;
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
     }
@@ -67,8 +78,8 @@
     }
 
     .day { 
-      width: 26px; 
-      height: 26px; 
+      width: 25px; 
+      height: 25px; 
       border-radius: 5px; 
       border: 1px solid rgba(255, 255, 255, 0.35); 
       display: flex; 
@@ -78,11 +89,10 @@
       color: #ffffff; 
       font-weight: bold;
       background-color: rgba(0, 0, 0, 0.2);
-      box-sizing: border-box;
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
     }
 
-    /* Finished Days -> Puce (#CC8899) */
+    /* Finished Days -> Puce */
     .past { 
       background-color: #CC8899 !important; 
       border-color: #CC8899 !important; 
@@ -90,7 +100,7 @@
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     }
 
-    /* Today -> Wild Orchid (#D470A2) */
+    /* Today -> Wild Orchid */
     .current { 
       background-color: #D470A2 !important; 
       border-color: #D470A2 !important; 
@@ -99,24 +109,29 @@
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     }
 
+    /* Print & WebKit Screen Capture Overrides */
     @media print {
       @page {
-        margin: 0;
-        size: auto;
+        margin: 0 !important;
+        size: 393px 852px;
       }
       html, body {
+        margin: 0 !important;
+        padding: 0 !important;
         background: url('IMG_4290.jpeg') no-repeat center center !important;
         background-size: cover !important;
-        height: 100vh !important;
-        width: 100vw !important;
+        height: 852px !important;
+        width: 393px !important;
+        overflow: hidden !important;
         justify-content: flex-end !important;
         align-items: center !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
-      .day, .timeline {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
+      #capture-wrapper {
+        height: 852px !important;
+        width: 393px !important;
+        padding-bottom: 75px !important;
       }
     }
   </style>
